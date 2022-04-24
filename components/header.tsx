@@ -1,47 +1,45 @@
-import {
-  Box,
-  Container,
-  Flex,
-  Heading,
-  Stack,
-  StackDivider,
-  Text,
-} from '@chakra-ui/react';
+import { Box, Container, Heading, Stack, StackDivider } from '@chakra-ui/react';
 import ToggleThemeButton from './toggleThemeButton';
+import { motion } from 'framer-motion';
+import Link from 'next/link';
+import Logo from './logo';
 
 const Header = () => {
   return (
-    <>
-      <Box as='nav' position='fixed' shadow='lg' w='100%' h='40px'>
-        <Container
-          display='flex'
-          p='1'
-          maxW='container.lg'
+    <motion.div
+      initial={{ y: '-200vh' }}
+      animate={{ y: 0 }}
+      transition={{ type: 'spring', stiffness: 50 }}
+    >
+      <Container display='flex' p='1' maxW='container.lg' h='50px' shadow='lg'>
+        <Heading size='lg'>
+          <Logo />
+        </Heading>
+        <Stack
+          display={{ base: 'none', md: 'flex' }}
+          spacing='20px'
+          flexGrow={2}
+          direction={{ base: 'column', md: 'row' }}
+          divider={<StackDivider borderColor='gray.700' />}
           alignItems='center'
-          justifyContent='space-between'
+          justify='left'
+          pl='30px'
         >
-          <Flex align='center' mr='6' pr='10px'>
-            <Heading size='lg'>CL CC</Heading>
-          </Flex>
-          <Stack
-            display={{ base: 'none', md: 'flex' }}
-            spacing='20px'
-            flexGrow={2}
-            direction={{ base: 'column', md: 'row' }}
-            divider={<StackDivider borderColor='gray.700' />}
-            align='center'
-            justify='left'
-          >
-            <Text>Link 1</Text>
-            <Text>Link 2</Text>
-            <Text>Something else</Text>
-          </Stack>
-          <Box alignItems='right'>
-            <ToggleThemeButton />
-          </Box>
-        </Container>
-      </Box>
-    </>
+          <Link href='/#section2' scroll={false}>
+            Link 1
+          </Link>
+          <Link href='/#section3' scroll={false}>
+            Link 2
+          </Link>
+          <Link href='/#section3' scroll={false}>
+            Link 3
+          </Link>
+        </Stack>
+        <Box display='flex' flexGrow={2} pt='8px' justifyContent='right'>
+          <ToggleThemeButton />
+        </Box>
+      </Container>
+    </motion.div>
   );
 };
 
