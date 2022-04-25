@@ -3,14 +3,15 @@ import ToggleThemeButton from './toggleThemeButton';
 import { motion } from 'framer-motion';
 import Link from 'next/link';
 import Logo from './logo';
+import {
+  navThemeButtonVariants,
+  navParentVariants,
+  navLinkVariants,
+} from '../components/fmVariants';
 
 const Header = () => {
   return (
-    <motion.div
-      initial={{ y: '-200vh' }}
-      animate={{ y: 0 }}
-      transition={{ type: 'spring', stiffness: 50 }}
-    >
+    <motion.nav variants={navParentVariants} initial='before' animate='after'>
       <Container display='flex' p='1' maxW='container.lg' h='50px' shadow='lg'>
         <Heading size='lg'>
           <Logo />
@@ -25,21 +26,29 @@ const Header = () => {
           justify='left'
           pl='30px'
         >
-          <Link href='/#section2' scroll={false}>
-            Link 1
-          </Link>
-          <Link href='/#section3' scroll={false}>
-            Link 2
-          </Link>
-          <Link href='/#section3' scroll={false}>
-            Link 3
-          </Link>
+          <motion.div variants={navLinkVariants}>
+            <Link href='/#section2' scroll={false}>
+              Link 1
+            </Link>
+          </motion.div>
+          <motion.div variants={navLinkVariants}>
+            <Link href='/#section2' scroll={false}>
+              Link 2
+            </Link>
+          </motion.div>
+          <motion.div variants={navLinkVariants}>
+            <Link href='/#section3' scroll={false}>
+              Link 3
+            </Link>
+          </motion.div>
         </Stack>
-        <Box display='flex' flexGrow={2} pt='8px' justifyContent='right'>
-          <ToggleThemeButton />
-        </Box>
+        <motion.div variants={navThemeButtonVariants}>
+          <Box display='flex' flexGrow={2} pt='8px' justifyContent='right'>
+            <ToggleThemeButton />
+          </Box>
+        </motion.div>
       </Container>
-    </motion.div>
+    </motion.nav>
   );
 };
 
