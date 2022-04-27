@@ -5,8 +5,10 @@ export const navParentVariants = {
   after: {
     opacity: 1.0,
     transition: {
+      // duration: 0.2,
       duration: 1.2,
-      staggerChildren: 0.08,
+      // staggerChildren: 0.08,
+      staggerChildren: 0.12,
     },
   },
 };
