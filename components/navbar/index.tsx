@@ -1,5 +1,5 @@
 import { Box, Container, Heading, Stack, StackDivider } from '@chakra-ui/react';
-import ToggleThemeButton from './toggleThemeButton';
+import ToggleTheme from './toggleTheme';
 import { motion } from 'framer-motion';
 import Link from 'next/link';
 import Logo from './logo';
@@ -7,12 +7,19 @@ import {
   navThemeButtonVariants,
   navParentVariants,
   navLinkVariants,
-} from '../components/fmVariants';
+} from '../fmVariants';
 
-const Header = () => {
+const Navbar = () => {
   return (
     <motion.nav variants={navParentVariants} initial='before' animate='after'>
-      <Container display='flex' p='1' maxW='container.lg' h='50px' shadow='lg'>
+      <Container
+        display='flex'
+        p='1'
+        maxW='container.lg'
+        h='50px'
+        shadow='lg'
+        justifyContent='space-between'
+      >
         <Heading size='lg'>
           <Logo />
         </Heading>
@@ -28,23 +35,23 @@ const Header = () => {
         >
           <motion.div variants={navLinkVariants}>
             <Link href='/#section2' scroll={false}>
-              Link 1
+              Layer 1
             </Link>
           </motion.div>
           <motion.div variants={navLinkVariants}>
             <Link href='/#section2' scroll={false}>
-              Link 2
+              Layer 2
             </Link>
           </motion.div>
           <motion.div variants={navLinkVariants}>
             <Link href='/#section3' scroll={false}>
-              Link 3
+              Contact
             </Link>
           </motion.div>
         </Stack>
         <motion.div variants={navThemeButtonVariants}>
-          <Box display='flex' flexGrow={2} pt='8px' justifyContent='right'>
-            <ToggleThemeButton />
+          <Box display='flex' pt='7px' justifyContent='right'>
+            <ToggleTheme />
           </Box>
         </motion.div>
       </Container>
@@ -52,4 +59,4 @@ const Header = () => {
   );
 };
 
-export default Header;
+export default Navbar;

@@ -1,6 +1,6 @@
 import Link from 'next/link';
 import Image from 'next/image';
-import logoImg from '../public/clLogo.svg';
+import logoImg from './clLogo.svg';
 
 const Logo = () => {
   return (
