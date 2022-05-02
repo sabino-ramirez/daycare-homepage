@@ -1,13 +1,13 @@
-import { Container, Heading } from '@chakra-ui/react';
+import { Box, Heading } from '@chakra-ui/react';
 
 const Body = () => {
   return (
     <>
-      <Container>
+      <Box position='relative'>
         <Heading as='h1' size='2xl' isTruncated>
           yuh
         </Heading>
-      </Container>
+      </Box>
     </>
   );
 };

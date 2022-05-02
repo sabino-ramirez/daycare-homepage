@@ -1,57 +1,127 @@
-import { motion } from 'framer-motion';
-import { Container } from '@chakra-ui/react';
-import * as T from 'three';
+import { Box, Container } from '@chakra-ui/react';
+import { useState, useEffect, useRef, useCallback } from 'react';
+import * as THREE from 'three';
+import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls';
+import { loadGLTFModel } from './model';
+import { ModelSpinner, ModelContainer } from './modelLoader';
 
-const Model = () => {
-  // Sizes
-  const sizes = {
-    width: 800,
-    height: 600,
-  };
+const easeOutCirc = (x: number) => Math.sqrt(1 - Math.pow(x - 1, 4));
 
-  // Canvas
-  const canvas = document.querySelector('canvas.webgl');
-
-  // Scene
-  const scene = new T.Scene();
-
-  // Object
-  const mesh = new T.Mesh(
-    new T.BoxGeometry(1, 1, 1, 5, 5, 5),
-    new T.MeshBasicMaterial({ color: 0xff0000 })
+const Bou = () => {
+  const refContainer = useRef<HTMLDivElement>(null);
+  const [loading, setLoading] = useState(true);
+  const [renderer, setRenderer] = useState<any>();
+  const [_camera, setCamera] = useState<any>();
+  const [target] = useState<any>(new THREE.Vector3(-0.5, 1.2, 0));
+  const [initialCameraPosition] = useState(
+    new THREE.Vector3(
+      20 * Math.sin(0.2 * Math.PI),
+      10,
+      20 * Math.cos(0.2 * Math.PI)
+    )
   );
-  scene.add(mesh);
+  const [scene] = useState(new THREE.Scene());
+  const [_controls, setControls] = useState<any>();
 
-  // Camera
-  const camera = new T.PerspectiveCamera(75, sizes.width / sizes.height);
-  camera.position.x = 2;
-  camera.position.y = 2;
-  camera.position.z = 2;
-  camera.lookAt(mesh.position);
-  scene.add(camera);
+  const handleWindowResize = useCallback(() => {
+    const { current: container } = refContainer;
+    if (container && renderer) {
+      const scW = container.clientWidth;
+      const scH = container.clientHeight;
 
-  // Renderer
-  // const renderer = new T.WebGLRenderer({
-  //   canvas,
-  // });
-  // renderer.setSize(sizes.width, sizes.height);
+      renderer.setSize(scW, scH);
+    }
+  }, [renderer]);
+
+  useEffect(() => {
+    const { current: container } = refContainer;
+    if (container && !renderer) {
+      const scW = container.clientWidth;
+      const scH = container.clientHeight;
+
+      const renderer = new THREE.WebGLRenderer({
+        antialias: true,
+        alpha: true,
+      });
+
+      renderer.setPixelRatio(window.devicePixelRatio);
+      renderer.setSize(scW, scH);
+      renderer.outputEncoding = THREE.sRGBEncoding;
+      container.appendChild(renderer.domElement);
+      setRenderer(renderer);
+
+      const scale = scH * 0.005 + 4.8;
+      const camera = new THREE.OrthographicCamera(
+        -scale,
+        scale,
+        scale,
+        -scale,
+        0.01,
+        50000
+      );
+      camera.position.copy(initialCameraPosition);
+      camera.lookAt(target);
+      setCamera(camera);
+
+      const ambientLight = new THREE.AmbientLight(0xcccccc, 1);
+      scene.add(ambientLight);
+
+      const controls = new OrbitControls(camera, renderer.domElement);
+      controls.autoRotate = true;
+      controls.target = target;
+      setControls(controls);
+
+      loadGLTFModel(scene, '/bou.glb', {
+        receiveShadow: false,
+        castShadow: false,
+      }).then(() => {
+        animate();
+        setLoading(false);
+      });
+
+      let req: any = null;
+      let frame = 0;
+      const animate = () => {
+        req = requestAnimationFrame(animate);
+
+        frame = frame <= 100 ? frame + 1 : frame;
+
+        if (frame <= 100) {
+          const p = initialCameraPosition;
+          const rotSpeed = -easeOutCirc(frame / 120) * Math.PI * 20;
+          camera.position.y = 10;
+          camera.position.x =
+            p.x * Math.cos(rotSpeed) + p.z * Math.sin(rotSpeed);
+          camera.position.z =
+            p.z * Math.cos(rotSpeed) - p.x * Math.sin(rotSpeed);
+          camera.lookAt(target);
+        } else {
+          controls.update();
+        }
+        renderer.render(scene, camera);
+      };
+      return () => {
+        console.log('unmount');
+        cancelAnimationFrame(req);
+        renderer.dispose();
+      };
+    }
+  }, []);
+
+  useEffect(() => {
+    window.addEventListener('resize', handleWindowResize, false);
+    return () => {
+      window.removeEventListener('resize', handleWindowResize, false);
+    };
+  }, [renderer, handleWindowResize]);
 
   return (
-    <motion.div
-      initial={{ opacity: 0 }}
-      animate={{ opacity: 1 }}
-      transition={{ duration: 2 }}
-    >
-      <Container
-        position='relative'
-        maxW={{ base: 'sm', md: 'xl' }}
-        h='md'
-        color='white'
-        outline='solid'
-        outlineColor='white'
-      ></Container>
-    </motion.div>
+    <>
+      <ModelContainer ref={refContainer}>
+        {loading && <ModelSpinner />}
+      </ModelContainer>
+    </>
   );
 };
 
-export default Model;
+export default Bou;
