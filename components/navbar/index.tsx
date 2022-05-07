@@ -7,7 +7,7 @@ import {
   navThemeButtonVariants,
   navParentVariants,
   navLinkVariants,
-} from '../fmVariants';
+} from '../../lib/fmVariants';
 
 const Navbar = () => {
   return (
