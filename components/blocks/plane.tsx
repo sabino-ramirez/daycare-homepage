@@ -1,5 +1,7 @@
 import * as T from 'three';
-import { useRef, useState, useEffect } from 'react';
+import { useRef } from 'react';
+import { usePlane } from '@react-three/cannon';
+import { angleToRadians } from '../../lib/angleToRadians';
 
 const Plane = (props: JSX.IntrinsicElements['mesh']) => {
   const planeRef = useRef<T.Mesh>(null);
@@ -20,9 +22,14 @@ const Plane = (props: JSX.IntrinsicElements['mesh']) => {
 
   return (
     <>
-      <mesh {...props} ref={planeRef} receiveShadow>
-        <planeGeometry args={[20, 20]} />
-        <meshStandardMaterial color={'lightblue'} />
+      <mesh
+        {...props}
+        ref={planeRef}
+        rotation={[-angleToRadians(90), 0, 0]}
+        receiveShadow
+      >
+        <planeGeometry args={[40, 40]} />
+        <meshStandardMaterial color={'lightgrey'} />
       </mesh>
     </>
   );
