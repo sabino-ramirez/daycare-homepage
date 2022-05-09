@@ -7,10 +7,7 @@ import Image from 'next/image';
 import { MyBox } from '../components/practice/boxTest';
 // import { MyBlock } from '../components/practice/ytBoxTest';
 import logo from '../lib/clLogo.svg';
-// import Plane from '../components/plane';
-// import Block from '../components/blocks';
 import Blocks from '../components/blocks';
-import { Canvas } from '@react-three/fiber';
 
 // const LazyBou = dynamic(() => import('../components/3dModel'), {
 //   ssr: false,
@@ -24,15 +21,13 @@ const Home: NextPage = () => {
       {/* <Flex justifyContent='space-around'> */}
       {/*   <Image src={logo} height={48} width='80px' priority /> */}
       {/* </Flex> */}
-      <VStack mt='15' spacing={15} align='center' className='vstack-main'>
-        <Flex h='100vh' w='100vw'>
-          {/* <LazyBou /> */}
-          <Blocks />
-        </Flex>
-        {/* <Flex h='100vh' w='100vw'> */}
-        {/*   <MyBox /> */}
-        {/* </Flex> */}
-      </VStack>
+      <Flex maxW={{ base: '100vw' }} h='100vh' w='100vw'>
+        {/* <LazyBou /> */}
+        <Blocks />
+      </Flex>
+      {/* <Flex h='100vh' w='100vw'> */}
+      {/*   <MyBox /> */}
+      {/* </Flex> */}
     </>
   );
 };
