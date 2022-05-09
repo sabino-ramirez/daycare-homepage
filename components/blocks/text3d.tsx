@@ -25,14 +25,14 @@ const OptionsList = () => {
   return (
     <>
       <mesh
-        position={[1.5, 2.0, 0]}
+        position={[3.5, 4.5, 0]}
         onClick={() => {
           click(!clicked);
         }}
         scale={clicked ? 1.5 : 1.0}
       >
-        <textGeometry args={['-> test', { font, size: 0.3, height: 0.1 }]} />
-        <meshPhysicalMaterial attach='material' color={'purple'} />
+        <textGeometry args={['-> test', { font, size: 0.8, height: 0.1 }]} />
+        <meshPhysicalMaterial attach='material' color={'gold'} />
       </mesh>
     </>
   );
