@@ -1,8 +1,13 @@
 import { RefObject, useEffect, useState } from 'react';
-import { Canvas, RootState } from '@react-three/fiber';
+import {
+  Canvas,
+  RootState,
+  extend,
+  useFrame,
+  useThree,
+} from '@react-three/fiber';
 import * as T from 'three';
 import { angleToRadians } from '../../lib/angleToRadians';
-import { useFrame, useThree } from '@react-three/fiber';
 import { useRef } from 'react';
 import { Box, PerspectiveCamera, OrbitControls } from '@react-three/drei';
 import {
@@ -17,6 +22,12 @@ import {
 // import { TextGeometry } from 'three/examples/jsm/geometries/TextGeometry';
 // import lato from '../../public/Lato_Black_Regular.json';
 import OptionsList from './text3d';
+import { useDrag } from '@use-gesture/react';
+import { DragControls } from '../../lib/DragControls';
+import { AspectRatio } from '@chakra-ui/react';
+// import { DragControls } from 'three/examples/jsm/controls/DragControls';
+
+extend({ DragControls });
 
 const CameraAndLights = () => {
   const cameraRef = useRef<T.Camera>(null);
@@ -29,24 +40,21 @@ const CameraAndLights = () => {
     //   orbitControlsRef.current.setPolarAngle((y + 1.5) * angleToRadians(45));
     //   orbitControlsRef.current.update();
     // }
-    // ref.current.position.y = elapsed;
-    // ref.current.position.y = Math.sin(elapsed * 1.5) + 1.5;
-    // console.log(cameraRef.current.position);
-    // cameraRef.current.position.y = Math.sin(elapsed * 2) + 1.5;
-    // cameraRef.current.lookAt(blockRef.current.position);
     // if (!!cameraRef.current) {
     //   cameraRef.current.lookAt(1.5, 0.5, 0);
     // }
+    // console.log(state.scene.children.at(0)); //scene has 0 children
   });
 
   return (
     <>
-      {/* <PerspectiveCamera */}
-      {/*   makeDefault */}
-      {/*   ref={cameraRef} */}
-      {/*   position={[-2.0, 4.5, 18.5]} */}
-      {/* /> */}
+      <PerspectiveCamera
+        makeDefault
+        ref={cameraRef}
+        position={[-2.0, 4.5, 18.5]}
+      />
       <OrbitControls
+        position={[-2, 4.5, 15]}
         ref={orbitControlsRef}
         maxPolarAngle={angleToRadians(90)}
       />
@@ -66,7 +74,14 @@ const Cube = (props: any) => {
   const [hovered, hover] = useState<Boolean>(false);
   const [clicked, click] = useState<Boolean>(false);
 
+  const [isDragging, setIsDragging] = useState(false);
+
   const pos = useRef({ x: 0, y: 0, z: 0 });
+  // const pos = useRef<T.Mesh>();
+  // const ex = new T.Mesh(
+  //   new T.BoxGeometry(1, 1, Math.random() - 10),
+  //   new T.MeshBasicMaterial({ color: 0xff00ff })
+  // );
 
   // const handleCollision = () => {
   //   console.log('cube colliding');
@@ -75,8 +90,8 @@ const Cube = (props: any) => {
   // set args here as well as through props down below
   // api is of type WorkerApi ref is of type RefObject<T.Object3D>
   // api is for physics stuff while ref is for position and camera and stuff
-  const [cubeRef, api]: [cubeRef: RefObject<T.Object3D>, api: WorkerApi] =
-    useBox(() => ({
+  const [cubeRef, api]: [cubeRef: RefObject<T.Mesh>, api: WorkerApi] = useBox(
+    () => ({
       mass: 10,
       castShadow: true,
       args: [2, 2, 2],
@@ -84,7 +99,29 @@ const Cube = (props: any) => {
       //   handleCollision();
       // },
       ...props,
-    }));
+    })
+  );
+
+  const check = useThree();
+  const aspect = check.size.width / check.viewport.width;
+  const bind = useDrag((gestureInfo) => {
+    // console.log(gestureInfo.movement);
+    console.log('gestureInfo', gestureInfo.active);
+    console.log('xy', gestureInfo.xy);
+    console.log('movement', gestureInfo.movement);
+    console.log('box ref', pos.current);
+    console.log('mouse width', check.mouse.width);
+    console.log('useThree cam', check.camera);
+
+    api.position.set(
+      (gestureInfo.xy[0] - check.size.width / 2) / aspect,
+      -(gestureInfo.xy[1] - check.size.height / 2) / aspect,
+      10
+    );
+    // pos.current.x + gestureInfo.movement[0] / aspect,
+    //   pos.current.y + gestureInfo.movement[1] / aspect,
+    //   0;
+  });
 
   useEffect(
     () =>
@@ -112,49 +149,54 @@ const Cube = (props: any) => {
     // if (!!props.camera) {
     //   if (!!cubeRef.current) props.camera.lookAt(cubeRef.current.position);
     // }
-    // if (!!clicked) {
-    //   props.camera.lookAt(pos.current.x, pos.current.y, pos.current.z);
-    //   // console.log(props.camera.lookAt.toString());
-    // }
-    // if (!!hovered) {
-    //   // props.scene.rotation.x = -Math.PI;
-    //   console.log(pos.current);
-    //   // props.camera.lookAt(pos.current.x, pos.current.y, pos.current.z);
-    //   // api.position.set(0, cubeRef.current?.position.y + 5, 0);
-    // }
     if (!!active) {
-      console.log(pos.current);
-      props.camera.position.set(
-        pos.current.x,
-        pos.current.y + 8,
-        pos.current.z
-      );
+      // console.log(pos.current);
       props.camera.lookAt(pos.current.x, pos.current.y, pos.current.z);
+      // THIS FOLLOWING METHOD will not work because it will only use the initial position.
+      // ...to get the api position of physics object we subscribe to it in useEffect
+      // if (!!cubeRef.current) {
+      //   console.log(cubeRef.current.position);
+      //   props.camera.lookAt(
+      //     cubeRef.current.position.x,
+      //     cubeRef.current.position.y,
+      //     cubeRef.current.position.z
+      //   );
+      // }
     }
   });
 
   return (
     //also set args here
     // we could use mesh and boxGeometry but <Box /> from drei is better
-    <Box
-      receiveShadow
-      castShadow
-      args={[2, 2, 2]}
-      ref={cubeRef}
-      // onClick={() => click(!clicked)}
-      onPointerDown={(e) => {
-        setActive(!active);
-        e.stopPropagation();
-      }}
-      // onPointerOver={(e) => {
-      //   hover(true);
-      //   e.stopPropagation();
-      // }}
-      // onPointerOut={() => hover(false)}
-      // onPointerOut={() => setActive(!active)}
-    >
-      <meshStandardMaterial metalness={1.0} color='pink' />
-    </Box>
+    <group>
+      <Box
+        {...bind()}
+        receiveShadow
+        castShadow
+        args={[2, 2, 2]}
+        ref={cubeRef}
+        // onClick={() => click(!clicked)}
+        // onPointerDown={(e) => {
+        //   setActive(!active);
+        //   e.stopPropagation();
+        // }}
+        // onPointerOver={(e) => {
+        //   hover(true);
+        //   e.stopPropagation();
+        // }}
+        // onPointerOut={() => hover(false)}
+        // onPointerOut={() => setActive(!active)}
+      >
+        <meshStandardMaterial
+          metalness={1.0}
+          color='darkorange'
+          transparent={true}
+          opacity={0.8}
+        />
+      </Box>
+      {/* <primitive object={ex} /> */}
+      {/* <dragControls args={[[pos], check.camera, check.gl.domElement]} /> */}
+    </group>
   );
 };
 
@@ -253,7 +295,7 @@ const BlocksScene = () => {
             {/*   rotation={[0, 0, -angleToRadians(90)]} */}
             {/*   position={[0, 0, 0]} */}
             {/* /> */}
-            <OptionsList />
+            {/* <OptionsList /> */}
           </Debug>
         </Physics>
       </Canvas>
