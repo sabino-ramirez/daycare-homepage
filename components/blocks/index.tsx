@@ -104,14 +104,18 @@ const Cube = (props: any) => {
 
   const check = useThree();
   const aspect = check.size.width / check.viewport.width;
+
   const bind = useDrag((gestureInfo) => {
-    // console.log(gestureInfo.movement);
+    gestureInfo.event.stopPropagation();
     console.log('gestureInfo', gestureInfo.active);
     console.log('xy', gestureInfo.xy);
     console.log('movement', gestureInfo.movement);
     console.log('box ref', pos.current);
     console.log('mouse width', check.mouse.width);
     console.log('useThree cam', check.camera);
+
+    gestureInfo.xy[0] = (gestureInfo.movement[0] / check.size.width) * 2 - 1;
+    gestureInfo.xy[1] = (gestureInfo.movement[1] / check.size.height) * 2 + 1;
 
     api.position.set(
       (gestureInfo.xy[0] - check.size.width / 2) / aspect,
