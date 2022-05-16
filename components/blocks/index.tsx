@@ -70,9 +70,9 @@ const CameraAndLights = () => {
 };
 
 const Cube = (props: any) => {
-  const [active, setActive] = useState<Boolean>(false);
-  const [hovered, hover] = useState<Boolean>(false);
-  const [clicked, click] = useState<Boolean>(false);
+  // const [active, setActive] = useState<Boolean>(false);
+  // const [hovered, hover] = useState<Boolean>(false);
+  // const [clicked, click] = useState<Boolean>(false);
 
   const [isDragging, setIsDragging] = useState(false);
 
@@ -114,14 +114,14 @@ const Cube = (props: any) => {
     console.log('mouse width', check.mouse.width);
     console.log('useThree cam', check.camera);
 
-    gestureInfo.xy[0] = (gestureInfo.movement[0] / check.size.width) * 2 - 1;
-    gestureInfo.xy[1] = (gestureInfo.movement[1] / check.size.height) * 2 + 1;
+    // gestureInfo.xy[0] = (gestureInfo.movement[0] / check.size.width) * 2 - 1;
+    // gestureInfo.xy[1] = (gestureInfo.movement[1] / check.size.height) * 2 + 1;
 
-    api.position.set(
-      (gestureInfo.xy[0] - check.size.width / 2) / aspect,
-      -(gestureInfo.xy[1] - check.size.height / 2) / aspect,
-      10
-    );
+    // api.position.set(
+    //   (gestureInfo.xy[0] - check.size.width / 2) / aspect,
+    //   -(gestureInfo.xy[1] - check.size.height / 2) / aspect,
+    //   10
+    // );
     // pos.current.x + gestureInfo.movement[0] / aspect,
     //   pos.current.y + gestureInfo.movement[1] / aspect,
     //   0;
@@ -153,20 +153,20 @@ const Cube = (props: any) => {
     // if (!!props.camera) {
     //   if (!!cubeRef.current) props.camera.lookAt(cubeRef.current.position);
     // }
-    if (!!active) {
-      // console.log(pos.current);
-      props.camera.lookAt(pos.current.x, pos.current.y, pos.current.z);
-      // THIS FOLLOWING METHOD will not work because it will only use the initial position.
-      // ...to get the api position of physics object we subscribe to it in useEffect
-      // if (!!cubeRef.current) {
-      //   console.log(cubeRef.current.position);
-      //   props.camera.lookAt(
-      //     cubeRef.current.position.x,
-      //     cubeRef.current.position.y,
-      //     cubeRef.current.position.z
-      //   );
-      // }
-    }
+    // if (!!active) {
+    // console.log(pos.current);
+    // props.camera.lookAt(pos.current.x, pos.current.y, pos.current.z);
+    // THIS FOLLOWING METHOD will not work because it will only use the initial position.
+    // ...to get the api position of physics object we subscribe to it in useEffect
+    // if (!!cubeRef.current) {
+    //   console.log(cubeRef.current.position);
+    //   props.camera.lookAt(
+    //     cubeRef.current.position.x,
+    //     cubeRef.current.position.y,
+    //     cubeRef.current.position.z
+    //   );
+    // }
+    // }
   });
 
   return (
