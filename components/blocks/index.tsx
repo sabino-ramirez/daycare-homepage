@@ -1,19 +1,19 @@
-import { RefObject, useContext, useEffect, useState } from 'react';
-import { Canvas, RootState, useFrame } from '@react-three/fiber';
-import * as T from 'three';
-import { angleToRadians } from '../../lib/angleToRadians';
-import { useRef } from 'react';
-import { Box, PerspectiveCamera, OrbitControls } from '@react-three/drei';
+import { RefObject, useContext, useEffect, useState } from "react";
+import { Canvas, RootState, useFrame } from "@react-three/fiber";
+import * as T from "three";
+import { angleToRadians } from "../../lib/angleToRadians";
+import { useRef } from "react";
+import { Box, PerspectiveCamera, OrbitControls } from "@react-three/drei";
 import {
   WorkerApi,
   Debug,
   Physics,
   useBox,
   usePlane,
-} from '@react-three/cannon';
-import { createContext } from 'vm';
-import { useDragConstraint, Cursor } from '../../helpers/drag';
-import Block from './block';
+} from "@react-three/cannon";
+import { createContext } from "vm";
+import { useDragConstraint, Cursor } from "../../helpers/drag";
+import Block from "./block";
 // import OptionsList from './text3d';
 
 // set up CameraAndLights
@@ -36,7 +36,7 @@ const CameraAndLights = () => {
       {/* /> */}
       <ambientLight intensity={0.5} />
       <pointLight
-        args={['white', 0.8]}
+        args={["white", 0.8]}
         // position={[-3, 5, 5]}
         position={[0, 5, 0]}
         shadow-mapSize={[2048, 2048]}
@@ -52,7 +52,7 @@ const PlaneSetup = (props: any) => {
   const [planeRef]: any = usePlane(() => ({
     mass: 10,
     rotation: [-Math.PI / 2, 0, 0],
-    type: 'Static',
+    type: "Static",
     collisionResponse: true,
     material: { friction: 10, restitution: 10 },
     ...props,
@@ -60,8 +60,8 @@ const PlaneSetup = (props: any) => {
 
   return (
     <mesh ref={planeRef} receiveShadow>
-      {/* <planeGeometry args={[40, 40]} /> */}
-      {/* <meshStandardMaterial color={'lightgray'} /> */}
+      <planeGeometry args={[40, 40]} />
+      <meshStandardMaterial color={"gray"} />
       {/* <shadowMaterial color={'grey'} /> */}
     </mesh>
   );
@@ -82,13 +82,13 @@ const DaycareBlock = (...props: any) => {
 
   const bind = useDragConstraint(ref);
   useFrame((state) => {
-    if (!!ref.current) {
-      state.camera.lookAt(
-        ref.current.position.x,
-        ref.current.position.z,
-        ref.current.position.z
-      );
-    }
+    // if (!!ref.current) {
+    //   state.camera.lookAt(
+    //     ref.current.position.x,
+    //     ref.current.position.z,
+    //     ref.current.position.z
+    //   );
+    // }
   });
 
   return <Block castShadow receiveShadow ref={ref} {...props} {...bind} />;
@@ -165,36 +165,41 @@ const DaycareBlock = (...props: any) => {
 const BlocksScene = (props: any) => {
   return (
     <>
-      <Canvas shadows>
-        <CameraAndLights />
-        <Physics>
-          <Debug color={'white'}>
-            {/* third */}
-            {/* <Cube */}
-            {/*   position={[-2.0, 20.5, -0.5]} */}
-            {/*   castShadow */}
-            {/*   rotation={[0, 0, angleToRadians(15)]} */}
-            {/* /> */}
-            {/* second */}
-            {/* <Cube */}
-            {/*   position={[-0.5, 15.5, 1.5]} */}
-            {/*   castShadow */}
-            {/*   rotation={[0, 0, angleToRadians(15)]} */}
-            {/* /> */}
-            {/* first */}
-            {/* <Cube */}
-            {/*   position={[0.0, 10.5, 0.0]} */}
-            {/*   rotation={[-angleToRadians(25), 0, 0]} */}
-            {/* /> */}
-            {/* x plane (actual floor) */}
+      <Canvas
+        dpr={[1, 2]}
+        shadows
+        camera={{ position: [-6, 12, 30], fov: 25, near: 1, far: 100 }}
+      >
+        {/* <CameraAndLights /> */}
+        <fog attach="fog" args={["#171720", 60, 90]} />
+        <ambientLight intensity={0.5} />
+        <pointLight position={[10, 25, 15]} args={["white"]} />
+        <Physics gravity={[0, -60, 0]}>
+          {/* third */}
+          {/* <Cube */}
+          {/*   position={[-2.0, 20.5, -0.5]} */}
+          {/*   castShadow */}
+          {/*   rotation={[0, 0, angleToRadians(15)]} */}
+          {/* /> */}
+          {/* second */}
+          {/* <Cube */}
+          {/*   position={[-0.5, 15.5, 1.5]} */}
+          {/*   castShadow */}
+          {/*   rotation={[0, 0, angleToRadians(15)]} */}
+          {/* /> */}
+          {/* first */}
+          {/* <Cube */}
+          {/*   position={[0.0, 10.5, 0.0]} */}
+          {/*   rotation={[-angleToRadians(25), 0, 0]} */}
+          {/* /> */}
+          {/* x plane (actual floor) */}
 
-            <PlaneSetup
-              rotation={[-angleToRadians(90), 0, 0]}
-              position={[0, -1, 0]}
-            />
-            <Cursor />
-            <DaycareBlock {...props} />
-          </Debug>
+          <PlaneSetup
+            rotation={[-angleToRadians(90), 0, 0]}
+            position={[0, -1, 0]}
+          />
+          <Cursor />
+          <DaycareBlock {...props} />
         </Physics>
       </Canvas>
     </>

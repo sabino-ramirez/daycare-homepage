@@ -26,16 +26,16 @@
 
 // export default Block;
 
-import { forwardRef } from 'react';
-import { RoundedBox } from '@react-three/drei';
+import { forwardRef } from "react";
+import { RoundedBox } from "@react-three/drei";
 
 const Block = forwardRef(
   (
     {
       children,
-      transparent = false,
-      opacity = 1,
-      color = 'pink',
+      transparent = true,
+      opacity = 0.98,
+      color = "gold",
       args = [2, 2, 2],
       ...props
     },

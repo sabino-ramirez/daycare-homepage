@@ -1,7 +1,7 @@
-import * as T from 'three';
-import { createRef, useCallback, useEffect } from 'react';
-import { useFrame } from '@react-three/fiber';
-import { usePointToPointConstraint, useSphere } from '@react-three/cannon';
+import * as T from "three";
+import { createRef, useCallback, useEffect } from "react";
+import { useFrame } from "@react-three/fiber";
+import { usePointToPointConstraint, useSphere } from "@react-three/cannon";
 
 const cursor = createRef<T.Mesh>();
 
@@ -13,13 +13,13 @@ const useDragConstraint = (child: any) => {
   useEffect(() => void api.disable(), []);
 
   const onPointerUp = useCallback((e: any) => {
-    document.body.style.cursor = 'grab';
+    document.body.style.cursor = "grab";
     e.target.releasePointerCapture(e.pointerId);
     api.disable();
   }, []);
 
   const onPointerDown = useCallback((e: any) => {
-    document.body.style.cursor = 'grabbing';
+    document.body.style.cursor = "grabbing";
     e.stopPropagation();
     e.target.setPointerCapture(e.pointerId);
     api.enable();
@@ -30,7 +30,7 @@ const useDragConstraint = (child: any) => {
 
 const Cursor = () => {
   const [, api] = useSphere(
-    () => ({ collisionFilterMask: 0, type: 'Kinematic', mass: 0, args: [0.5] }),
+    () => ({ collisionFilterMask: 0, type: "Kinematic", mass: 0, args: [0.5] }),
     cursor
   );
 
@@ -38,7 +38,7 @@ const Cursor = () => {
     const x = state.mouse.x * state.viewport.width;
     const y = (state.mouse.y * state.viewport.height) / 1.9 + -x / 3.5;
     api.position.set(x / 1.4, y, 0);
-  })
+  });
 };
 
-export { useDragConstraint, cursor, Cursor }
+export { useDragConstraint, cursor, Cursor };
