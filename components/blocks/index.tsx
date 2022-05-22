@@ -1,19 +1,19 @@
-import { RefObject, useContext, useEffect, useState } from "react";
-import { Canvas, RootState, useFrame } from "@react-three/fiber";
-import * as T from "three";
-import { angleToRadians } from "../../lib/angleToRadians";
-import { useRef } from "react";
-import { Box, PerspectiveCamera, OrbitControls } from "@react-three/drei";
+import { RefObject, useContext, useEffect, useState } from 'react';
+import { Canvas, RootState, useFrame } from '@react-three/fiber';
+import * as T from 'three';
+import { angleToRadians } from '../../lib/angleToRadians';
+import { useRef } from 'react';
+import { Box, PerspectiveCamera, OrbitControls } from '@react-three/drei';
 import {
   WorkerApi,
   Debug,
   Physics,
   useBox,
   usePlane,
-} from "@react-three/cannon";
-import { createContext } from "vm";
-import { useDragConstraint, Cursor } from "../../helpers/drag";
-import Block from "./block";
+} from '@react-three/cannon';
+import { createContext } from 'vm';
+import { useDragConstraint, Cursor } from '../../helpers/drag';
+import Block from './block';
 // import OptionsList from './text3d';
 
 // set up CameraAndLights
@@ -36,7 +36,7 @@ const CameraAndLights = () => {
       {/* /> */}
       <ambientLight intensity={0.5} />
       <pointLight
-        args={["white", 0.8]}
+        args={['white', 0.8]}
         // position={[-3, 5, 5]}
         position={[0, 5, 0]}
         shadow-mapSize={[2048, 2048]}
@@ -52,7 +52,7 @@ const PlaneSetup = (props: any) => {
   const [planeRef]: any = usePlane(() => ({
     mass: 10,
     rotation: [-Math.PI / 2, 0, 0],
-    type: "Static",
+    type: 'Static',
     collisionResponse: true,
     material: { friction: 10, restitution: 10 },
     ...props,
@@ -61,7 +61,7 @@ const PlaneSetup = (props: any) => {
   return (
     <mesh ref={planeRef} receiveShadow>
       <planeGeometry args={[40, 40]} />
-      <meshStandardMaterial color={"gray"} />
+      <meshStandardMaterial color={'gray'} />
       {/* <shadowMaterial color={'grey'} /> */}
     </mesh>
   );
@@ -74,8 +74,9 @@ const DaycareBlock = (...props: any) => {
   const [ref] = useBox(() => ({
     mass: 10,
     castShadow: true,
-    args: [2, 2, 2],
-    position: [0, 5, 0],
+    args: [3, 3, 3],
+    position: [0, 15, 0],
+    rotation: [-angleToRadians(42), 0, 0],
     linearDamping: 0.99,
     ...props,
   }));
@@ -171,10 +172,10 @@ const BlocksScene = (props: any) => {
         camera={{ position: [-6, 12, 30], fov: 25, near: 1, far: 100 }}
       >
         {/* <CameraAndLights /> */}
-        <fog attach="fog" args={["#171720", 60, 90]} />
+        {/* <fog attach="fog" args={["#171720", 60, 90]} /> */}
         <ambientLight intensity={0.5} />
-        <pointLight position={[10, 25, 15]} args={["white"]} />
-        <Physics gravity={[0, -60, 0]}>
+        <pointLight position={[10, 25, 15]} args={['white']} />
+        <Physics allowSleep={false} iterations={15} gravity={[0, -200, 0]}>
           {/* third */}
           {/* <Cube */}
           {/*   position={[-2.0, 20.5, -0.5]} */}
