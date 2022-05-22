@@ -5,33 +5,33 @@ import {
   Stack,
   StackDivider,
   Text,
-} from '@chakra-ui/react';
-import ToggleTheme from './toggleTheme';
-import { motion } from 'framer-motion';
-import Logo from './logo';
+} from "@chakra-ui/react";
+import ToggleTheme from "./toggleTheme";
+import { motion } from "framer-motion";
+import Logo from "./logo";
 import {
   navThemeButtonVariants,
   navParentVariants,
   navLinkVariants,
-} from '../../lib/fmVariants';
+} from "../../lib/fmVariants";
 
 const Navbar = () => {
   return (
-    <motion.nav variants={navParentVariants} initial='before' animate='after'>
+    <motion.nav variants={navParentVariants} initial="before" animate="after">
       <Container
-        display='flex'
-        p='1'
-        maxW='container.lg'
-        h='50px'
-        shadow='lg'
-        justifyContent='space-between'
+        display="flex"
+        p="1"
+        maxW="container.lg"
+        h="50px"
+        shadow="lg"
+        justifyContent="space-between"
       >
         <Text>Burger</Text>
-        <Heading size='lg'>
+        <Heading size="lg">
           <Logo />
         </Heading>
         <motion.div variants={navThemeButtonVariants}>
-          <Box display='flex' pt='7px' justifyContent='right'>
+          <Box display="flex" pt="7px" justifyContent="right">
             <ToggleTheme />
           </Box>
         </motion.div>

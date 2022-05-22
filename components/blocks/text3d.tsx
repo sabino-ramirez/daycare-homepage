@@ -1,10 +1,10 @@
-import { extend } from '@react-three/fiber';
-import { FontLoader } from 'three/examples/jsm/loaders/FontLoader';
-import { TextGeometry } from 'three/examples/jsm/geometries/TextGeometry';
-import lato from '../../public/Lato_Black_Regular.json';
-import { useSpring } from '@react-spring/three';
-import { useState, useRef } from 'react';
-import * as T from 'three';
+import { extend } from "@react-three/fiber";
+import { FontLoader } from "three/examples/jsm/loaders/FontLoader";
+import { TextGeometry } from "three/examples/jsm/geometries/TextGeometry";
+import lato from "../../public/Lato_Black_Regular.json";
+import { useSpring } from "@react-spring/three";
+import { useState, useRef } from "react";
+import * as T from "three";
 
 extend({ TextGeometry });
 
@@ -31,8 +31,8 @@ const OptionsList = () => {
         }}
         scale={clicked ? 1.5 : 1.0}
       >
-        <textGeometry args={['-> test', { font, size: 0.8, height: 0.1 }]} />
-        <meshPhysicalMaterial attach='material' color={'gold'} />
+        <textGeometry args={["-> test", { font, size: 0.8, height: 0.1 }]} />
+        <meshPhysicalMaterial attach="material" color={"white"} />
       </mesh>
     </>
   );

@@ -1,5 +1,5 @@
-import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader';
-import * as THREE from 'three';
+import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader";
+import * as THREE from "three";
 
 export const loadGLTFModel = (
   scene: THREE.Scene,
@@ -14,7 +14,7 @@ export const loadGLTFModel = (
       glbPath,
       (gltf) => {
         const obj = gltf.scene;
-        obj.name = 'dog';
+        obj.name = "dog";
         obj.position.y = 0;
         obj.position.x = 0;
         obj.receiveShadow = receiveShadow;

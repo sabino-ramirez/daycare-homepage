@@ -14,19 +14,19 @@ export const navParentVariants = {
 };
 export const navLinkVariants = {
   before: {
-    x: '-400vw',
+    x: "-400vw",
   },
   after: {
     x: 0,
     transition: {
-      type: 'spring',
+      type: "spring",
       mass: 0.4,
       damping: 8,
     },
   },
   hover: {
     scale: 1.04,
-    textShadow: '0px 0px 5px rgb(255,255,255)',
+    textShadow: "0px 0px 5px rgb(255,255,255)",
   },
 };
 

@@ -1,8 +1,8 @@
-import * as T from 'three';
-import { useRef, useState } from 'react';
-import { Canvas, useFrame } from '@react-three/fiber';
+import * as T from "three";
+import { useRef, useState } from "react";
+import { Canvas, useFrame } from "@react-three/fiber";
 
-const BoxSetup = (props: JSX.IntrinsicElements['mesh']) => {
+const BoxSetup = (props: JSX.IntrinsicElements["mesh"]) => {
   // this reference gives direct access to the THREE.Mesh object
   const ref = useRef<T.Mesh>(null!);
 
@@ -23,7 +23,7 @@ const BoxSetup = (props: JSX.IntrinsicElements['mesh']) => {
       onPointerOut={() => hover(false)}
     >
       <boxGeometry args={[3, 2, 1]} />
-      <meshStandardMaterial color={hovered ? 'hotpink' : 'orange'} />
+      <meshStandardMaterial color={hovered ? "hotpink" : "orange"} />
     </mesh>
   );
 };
@@ -36,7 +36,7 @@ export const MyBox = () => {
       <pointLight position={[-10, -10, -10]} />
       <mesh>
         <boxGeometry />
-        <meshStandardMaterial color='gray' />
+        <meshStandardMaterial color="gray" />
       </mesh>
       <BoxSetup position={[-2.2, 0, 0]} />
       <BoxSetup position={[2.2, 0, 0]} />

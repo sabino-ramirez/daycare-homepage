@@ -1,18 +1,18 @@
-import * as T from 'three';
-import { useRef, useState, useEffect } from 'react';
-import { useFrame, Canvas } from '@react-three/fiber';
-import { angleToRadians } from '../../../lib/angleToRadians';
+import * as T from "three";
+import { useRef, useState, useEffect } from "react";
+import { useFrame, Canvas } from "@react-three/fiber";
+import { angleToRadians } from "../../../lib/angleToRadians";
 import {
   PerspectiveCamera,
   OrbitControls,
   Environment,
-} from '@react-three/drei';
-import gsap from 'gsap';
+} from "@react-three/drei";
+import gsap from "gsap";
 
 const clock = new T.Clock();
 const elapsed = clock.getElapsedTime();
 
-const Plane = (props: JSX.IntrinsicElements['mesh']) => {
+const Plane = (props: JSX.IntrinsicElements["mesh"]) => {
   const planeRef = useRef<T.Mesh>(null);
 
   // useEffect(() => {
@@ -38,13 +38,13 @@ const Plane = (props: JSX.IntrinsicElements['mesh']) => {
         receiveShadow
       >
         <planeGeometry args={[20, 20]} />
-        <meshStandardMaterial color={'green'} />
+        <meshStandardMaterial color={"green"} />
       </mesh>
     </>
   );
 };
 
-const Block = (props: JSX.IntrinsicElements['mesh']) => {
+const Block = (props: JSX.IntrinsicElements["mesh"]) => {
   // this reference gives direct access to the THREE.Mesh object
   const blockRef = useRef<T.Mesh>(null!);
   const cameraRef = useRef<T.Camera>(null!);
@@ -79,7 +79,7 @@ const Block = (props: JSX.IntrinsicElements['mesh']) => {
         x: 8,
         y: 5.0,
         duration: 2,
-        ease: 'expo.out',
+        ease: "expo.out",
       });
     }
   }, [blockRef.current]);
@@ -98,14 +98,14 @@ const Block = (props: JSX.IntrinsicElements['mesh']) => {
               y: 3.0,
               // delay: 0.4,
               duration: 2,
-              ease: 'elastic.out',
+              ease: "elastic.out",
             }
           : {
               // x: 4.5,
               y: 0.5,
               delay: 0.4,
               duration: 3,
-              ease: 'bounce.out',
+              ease: "bounce.out",
             }
       );
     }
@@ -133,7 +133,7 @@ const Block = (props: JSX.IntrinsicElements['mesh']) => {
       >
         <boxGeometry args={[2, 2, 2]} />
         <meshStandardMaterial
-          color={'yellow'}
+          color={"yellow"}
           metalness={1}
           wireframe={false}
         />
@@ -150,13 +150,13 @@ export const MyBlock = () => {
   return (
     <Canvas shadows>
       <ambientLight intensity={0.25} />
-      <pointLight args={['white', 0.8]} position={[-3, 5, 3]} castShadow />
+      <pointLight args={["white", 0.8]} position={[-3, 5, 3]} castShadow />
       {/* <pointLight args={['white', 1]} position={[-5, 5, 3]} /> */}
       {/* <spotLight args={['white', 1]} position={[-5, 5, 3]} /> */}
       <Environment background>
         <mesh>
           <sphereGeometry args={[50, 100, 100]} />
-          <meshBasicMaterial side={T.BackSide} color={'gray'} />
+          <meshBasicMaterial side={T.BackSide} color={"gray"} />
         </mesh>
       </Environment>
       {/* top */}

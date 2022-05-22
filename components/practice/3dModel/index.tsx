@@ -1,9 +1,9 @@
-import { Box, Container } from '@chakra-ui/react';
-import { useState, useEffect, useRef, useCallback } from 'react';
-import * as THREE from 'three';
-import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls';
-import { loadGLTFModel } from './model';
-import { ModelSpinner, ModelContainer } from './modelLoader';
+import { Box, Container } from "@chakra-ui/react";
+import { useState, useEffect, useRef, useCallback } from "react";
+import * as THREE from "three";
+import { OrbitControls } from "three/examples/jsm/controls/OrbitControls";
+import { loadGLTFModel } from "./model";
+import { ModelSpinner, ModelContainer } from "./modelLoader";
 
 const easeOutCirc = (x: number) => Math.sqrt(1 - Math.pow(x - 1, 4));
 
@@ -71,7 +71,7 @@ const Bou = () => {
       controls.target = target;
       setControls(controls);
 
-      loadGLTFModel(scene, '/bou.glb', {
+      loadGLTFModel(scene, "/bou.glb", {
         receiveShadow: false,
         castShadow: false,
       }).then(() => {
@@ -101,7 +101,7 @@ const Bou = () => {
         renderer.render(scene, camera);
       };
       return () => {
-        console.log('unmount');
+        console.log("unmount");
         cancelAnimationFrame(req);
         renderer.dispose();
       };
@@ -109,9 +109,9 @@ const Bou = () => {
   }, []);
 
   useEffect(() => {
-    window.addEventListener('resize', handleWindowResize, false);
+    window.addEventListener("resize", handleWindowResize, false);
     return () => {
-      window.removeEventListener('resize', handleWindowResize, false);
+      window.removeEventListener("resize", handleWindowResize, false);
     };
   }, [renderer, handleWindowResize]);
 
