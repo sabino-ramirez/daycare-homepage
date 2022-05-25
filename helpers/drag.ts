@@ -1,11 +1,11 @@
 import * as T from "three";
-import { createRef, useCallback, useEffect } from "react";
+import { createRef, Ref, useCallback, useEffect } from "react";
 import { useFrame } from "@react-three/fiber";
 import { usePointToPointConstraint, useSphere } from "@react-three/cannon";
 
 const cursor = createRef<T.Mesh>();
 
-const useDragConstraint = (child: any) => {
+const useDragConstraint = (child: Ref<T.Object3D>) => {
   const [, , api] = usePointToPointConstraint(cursor, child, {
     pivotA: [0, 0, 0],
     pivotB: [0, 0, 0],
