@@ -1,9 +1,9 @@
 import { RoundedBox } from "@react-three/drei";
-import { useFrame } from '@react-three/fiber'
-import { useBox } from '@react-three/cannon';
-import { useDragConstraint } from '../../helpers/drag';
+import { useFrame } from "@react-three/fiber";
+import { useBox } from "@react-three/cannon";
+import { useDragConstraint } from "../../helpers/drag";
 
-const DaycareBlock = (props:  any) => {
+const DaycareBlock = (props: any) => {
   const [ref] = useBox(() => ({
     mass: 10,
     castShadow: true,
@@ -17,21 +17,28 @@ const DaycareBlock = (props:  any) => {
   const bind = useDragConstraint(ref);
 
   useFrame((state) => {
-    state.camera.lookAt(0, 0, 0)
-  })
+    state.camera.lookAt(0, 0, 0);
+  });
 
   return (
     <>
-      <RoundedBox receiveShadow castShadow args={[3.5, 3.5, 3.5]} ref={ref} {...props} {...bind}>
+      <RoundedBox
+        receiveShadow
+        castShadow
+        args={[3.5, 3.5, 3.5]}
+        ref={ref}
+        {...props}
+        {...bind}
+      >
         <meshStandardMaterial
-          color={'lightblue'}
+          color={"lightblue"}
           transparent={true}
           opacity={1}
           metalness={1}
         />
       </RoundedBox>
     </>
-  )
+  );
 };
 
 export default DaycareBlock;

@@ -1,15 +1,20 @@
 import * as T from "three";
 import { createRef, Ref, useCallback, useEffect } from "react";
 import { useFrame } from "@react-three/fiber";
-import { usePointToPointConstraint, useSphere } from "@react-three/cannon";
+import {
+  // useDistanceConstraint,
+  usePointToPointConstraint,
+  useSphere,
+} from "@react-three/cannon";
 
 const cursor = createRef<T.Mesh>();
 
 const useDragConstraint = (child: Ref<T.Object3D>) => {
   const [, , api] = usePointToPointConstraint(cursor, child, {
-    pivotA: [0, 0, 0],
-    pivotB: [0, 0, 0],
+    pivotA: [0, 1.5, 0],
+    pivotB: [0, 1.5, 0],
   });
+  // const [, , api] = useDistanceConstraint(cursor, child, { distance: 0 });
   useEffect(() => void api.disable(), []);
 
   const onPointerUp = useCallback((e: any) => {
@@ -36,8 +41,8 @@ const Cursor = () => {
 
   return useFrame((state) => {
     const x = state.mouse.x * state.viewport.width;
-    const y = (state.mouse.y * state.viewport.height) / 1.9 + -x / 3.5;
-    api.position.set(x / 1.4, y, 0);
+    const y = state.mouse.y * state.viewport.height; // / 1.9 + -x / 3.5;
+    api.position.set(x * 2, y * 2, 0);
   });
 };
 
