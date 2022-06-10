@@ -11,7 +11,7 @@ const DaycareBlock = (props: any) => {
     position: [0, 10, 0],
     rotation: [Math.PI / 4, Math.PI / 4, Math.PI / 8],
     linearDamping: 0.99,
-    ...props,
+    // ...props,
   }));
 
   const bind = useDragConstraint(ref);

@@ -12,7 +12,7 @@ declare global {
   }
 }
 
-const OptionsList = ({ children }: { children: string }) => {
+const OptionsList = ({ children, position }: { children: string, position: number[] }) => {
   // const font = new FontLoader().parse(lato);
   // const [clicked, click] = useState(false);
 
@@ -21,11 +21,11 @@ const OptionsList = ({ children }: { children: string }) => {
   return (
     <>
       <Text
-        position={[14, 9, -5]}
+        position={[position[0], position[1], position[2]]}
         rotation={[0, -Math.PI/10, 0]}
         lineHeight={0.5}
         // font="/Ki-Medium.ttf"
-        fontSize={width / 10}
+        fontSize={width / 8}
         material-toneMapped={false}
         anchorX="center"
         anchorY="middle"

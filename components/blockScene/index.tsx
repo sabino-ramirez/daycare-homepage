@@ -20,7 +20,9 @@ const BlocksScene = () => {
             <DaycareBlock position={[-1.5, 30, 1]} />
           </Debug>
         </Physics>
-        <OptionsList>{`hey boii`}</OptionsList>
+        <OptionsList position={[14, 9, -5]}>{`Introduction`}</OptionsList>
+        <OptionsList position={[14, 7, -5]}>{`Age Groups`}</OptionsList>
+        <OptionsList position={[14, 5, -5]}>{`Contact`}</OptionsList>
       </Canvas>
     </>
   );
