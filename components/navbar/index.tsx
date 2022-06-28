@@ -31,7 +31,7 @@ const Navbar = () => {
           <Logo />
         </Heading>
         <motion.div variants={navThemeButtonVariants}>
-          <Box display="flex" pt="7px" justifyContent="right">
+          <Box display="flex" pt="5px" justifyContent="right">
             <ToggleTheme />
           </Box>
         </motion.div>

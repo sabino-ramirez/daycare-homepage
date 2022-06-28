@@ -13,15 +13,13 @@ const BlocksScene = () => {
       <Canvas dpr={[1, 2]} shadows>
         <CameraAndLights />
         <Physics allowSleep={false} iterations={15} gravity={[0, -200, 0]}>
-          <Debug>
-            <Cursor />
-            <PlaneSetup rotation={[-Math.PI / 2, 0, 0]} position={[0, -1, 0]} />
-            <DaycareBlock position={[0, 20, 0]} />
-            <DaycareBlock position={[-1.5, 30, 1]} />
-          </Debug>
+          <Cursor />
+          <PlaneSetup rotation={[-Math.PI / 2, 0, 0]} position={[0, -1, 0]} />
+          <DaycareBlock position={[0, 20, 0]} />
+          <DaycareBlock position={[-1.5, 30, 1]} />
         </Physics>
-        <OptionsList position={[14, 9, -5]}>{`Introduction`}</OptionsList>
-        <OptionsList position={[14, 7, -5]}>{`Age Groups`}</OptionsList>
+        <OptionsList position={[14, 11, -5]}>{`Introduction`}</OptionsList>
+        <OptionsList position={[14, 8, -5]}>{`Age Groups`}</OptionsList>
         <OptionsList position={[14, 5, -5]}>{`Contact`}</OptionsList>
       </Canvas>
     </>

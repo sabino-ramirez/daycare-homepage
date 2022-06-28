@@ -22,8 +22,9 @@ const OptionsList = ({ children, position }: { children: string, position: numbe
     <>
       <Text
         position={[position[0], position[1], position[2]]}
-        rotation={[0, -Math.PI/10, 0]}
+        rotation={[0, -Math.PI / 10, 0]}
         lineHeight={0.5}
+        color={"lightgray"}
         // font="/Ki-Medium.ttf"
         fontSize={width / 8}
         material-toneMapped={false}
